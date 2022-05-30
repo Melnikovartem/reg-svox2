@@ -170,7 +170,7 @@ def generate_dirs_equirect(w, h):
         indexing="xy",
     )
     uv = np.stack([x * (2.0 / w) - 1.0, y * (2.0 / h) - 1.0], axis=-1)
-    camera_dirs = equirect2xyz(uv)
+    camera_dirs = equirect2xyz(uv, w, h)
     return camera_dirs
 
 
@@ -289,7 +289,7 @@ def generate_rays(w, h, focal, camtoworlds, equirect=False):
 
     if equirect:
         uv = np.stack([x * (2.0 / w) - 1.0, y * (2.0 / h) - 1.0], axis=-1)
-        camera_dirs = equirect2xyz(uv)
+        camera_dirs = equirect2xyz(uv, w, h)
     else:
         camera_dirs = np.stack(
             [

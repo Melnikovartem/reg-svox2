@@ -1675,6 +1675,21 @@ class SparseGrid(nn.Module):
         t[index, :-1] = self.sh_data.data.to(device=device)
         t[index, -1:] = self.density_data.data.to(device=device)
         return t
+        
+    def inplace_depth_grad(self, grad: torch.Tensor,
+                        	scaling: float = 1.0,
+                    ):
+        """
+        Add gradient of depth supervised loss
+        directly into the gradient tensor, multiplied by 'scaling'
+        """
+        assert (
+            _C is not None and self.density_data.is_cuda and grad.is_cuda
+        ), "CUDA extension is currently required for total variation"
+        
+        assert False, "TODO"
+        # ???????
+        # _C.ds_grad(grad)
 
     def tv(self, logalpha: bool=False, logalpha_delta: float=2.0,
            ndc_coeffs: Tuple[float, float] = (-1.0, -1.0)):
